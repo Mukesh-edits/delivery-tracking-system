@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delivery-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: delivery-app
+  template:
+    metadata:
+      labels:
+        app: delivery-app
+    spec:
+      containers:
+      - name: delivery-app
+        image: mukesh20050605/delivery-tracking-system:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: delivery-service
+spec:
+  type: NodePort
+  selector:
+    app: delivery-app
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30010
